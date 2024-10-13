@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Executables compiled by makefile
+star-balls
+stars2d
+stars-cpp
