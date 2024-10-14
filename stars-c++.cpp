@@ -6,6 +6,11 @@
 #define MAX_STARS 32
 #define RADIUS 5.0
 
+/* stars-c++.cpp - basically a port of stars2d.c to C++.                      *
+ * I thought using of class function would result in more readable code.      */
+
+// I know rand() is not recomended in C++, but I wanted to port stars2d.c 
+// with minimal changes to functionality.
 float generateRandomFloat(float minimum, float maximum)
 {
 	float scale = std::rand() / (float) RAND_MAX;
@@ -20,7 +25,6 @@ public:
 
 	void moveStar(int xOffset, int yOffset)
 	{
-		//Сдвинуть снаряд учитывая его скорость и изменения размера окна.
 		coords.x += xOffset + std::cos(angle) * speed;
 		coords.y += yOffset + std::sin(angle) * speed;
 	}
@@ -54,18 +58,20 @@ int main(void)
 	}
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(defaultWidth, defaultHeight, u8"Снаряды.");
+	InitWindow(defaultWidth, defaultHeight, u8"stars-2d in C++.");
 	SetWindowMinSize(minWidth, minHeight);
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
 		int curHeight = GetScreenHeight();
 		int curWidth = GetScreenWidth();
+		// Needed to center stars on screen.
 		halfHeight = curHeight / 2;
 		halfWidth = curWidth / 2;
+		// Needed to offset depending on changed window size
 		int halfDiffWidth = (curWidth - prevWidth) / 2;
 		int halfDiffHeight = (curHeight - prevHeight) / 2;
 		Rectangle screenRec = (Rectangle) {0, 0, curWidth, curHeight};
-
+		// For checking if star is still within window.
 		stars[0].resetPosition(halfWidth, halfHeight);
 		for (int i = 1; i < MAX_STARS; i++) {
 			stars[i].moveStar(halfDiffWidth, halfDiffHeight);

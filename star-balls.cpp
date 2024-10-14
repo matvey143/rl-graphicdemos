@@ -9,6 +9,7 @@ public:
 	Vector3 position;
 	float speed;
 
+	//TODO: make a more readable initialization function;
 	void resetStar(float newX, float newY, float newZ, float newSpeed)
 	{
 		radius = 1.0;
@@ -32,7 +33,7 @@ int main()
 	const float minZ = 50.0;
 	const float cameraPos = -10.0;
 
-	//Инициализация генератора случайных чисел с запятой
+	//Initializing RNG.
 	std::random_device randDevice;
 	std::mt19937 rng(randDevice());
 	std::uniform_real_distribution<> distrXY(minXY, maxXY);
@@ -52,7 +53,7 @@ int main()
 	camera.projection = CAMERA_PERSPECTIVE;
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(640, 480, u8"Шарики");
+	InitWindow(640, 480, u8"3d Balls.");
 	SetWindowMinSize(320, 240);
 	SetTargetFPS(60);
 	while(!WindowShouldClose()) {
