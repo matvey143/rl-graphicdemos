@@ -1,4 +1,4 @@
-LDFLAGS = '-wl,-rpath,$$ORIGIN' -L./ -I./ -lraylib -lGL -lm -lpthread -ldl -rt -lX11
+LDFLAGS = '-Wl,-rpath,$$ORIGIN' -L./ -I./ -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 CFLAGS =
 
 all: star-balls stars2d stars-cpp
