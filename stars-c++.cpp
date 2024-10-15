@@ -32,7 +32,7 @@ public:
 	{
 		speed = generateRandomFloat(1.0, 10.0);
 		angle = generateRandomFloat(0.0, M_PI * 2);
-		coords = (Vector2) {startX, startY};
+		coords = (Vector2) {(float) startX, (float) startY};
 	}
 };
 
@@ -70,7 +70,7 @@ int main(void)
 		// Needed to offset depending on changed window size
 		int halfDiffWidth = (curWidth - prevWidth) / 2;
 		int halfDiffHeight = (curHeight - prevHeight) / 2;
-		Rectangle screenRec = (Rectangle) {0, 0, curWidth, curHeight};
+		Rectangle screenRec = (Rectangle) {0, 0, (float) curWidth, (float) curHeight};
 		// For checking if star is still within window.
 		stars[0].resetPosition(halfWidth, halfHeight);
 		for (int i = 1; i < MAX_STARS; i++) {
