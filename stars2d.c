@@ -2,8 +2,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
-#define MAX_STARS 32
+#define MAX_STARS 64
 #define RADIUS 5.0
 
 /* stars-2d.c - basic animation that creates random circle-shaped projectiles * 
@@ -13,6 +14,7 @@ struct Star {
 	float speed;
 	float angle;
 	Vector2 coords;
+	Color color;
 };
 
 // Credit goes baz from Stack Overflow forum for this function.
@@ -34,6 +36,9 @@ void initNewStar(struct Star *projectile, int startX, int startY)
 	projectile->speed = generateRandomFloat(1.0, 10.0);
 	projectile->angle = generateRandomFloat(0.0, M_PI * 2);
 	projectile->coords = (Vector2) {startX, startY};
+	int temp = rand();
+	char *byte_ptr = (char *) &temp;
+	projectile->color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], byte_ptr[3]};
 }
 
 int main(void)
@@ -46,16 +51,17 @@ int main(void)
 	const int minHeight = 240;
 	int halfHeight = defaultHeight / 2;
 	int halfWidth = defaultWidth / 2;
+	bool noColor = false; 
 
 	srand(time(NULL));
 	struct Star stars[MAX_STARS];
-	stars[0] = (struct Star) {0.0, 0.0, (Vector2) {halfWidth, halfHeight}};
+	stars[0] = (struct Star) {0.0, 0.0, (Vector2) {halfWidth, halfHeight}, WHITE};
 	for (int i = 1; i < MAX_STARS; i++) {
 		initNewStar(&stars[i], halfWidth, halfHeight);
 	}
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(defaultWidth, defaultHeight, u8"stars-2d.");
+	InitWindow(defaultWidth, defaultHeight, u8"stars-2d. Press spacebar to change color mode.");
 	SetWindowMinSize(minWidth, minHeight);
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
@@ -69,8 +75,11 @@ int main(void)
 		int halfDiffHeight = (curHeight - prevHeight) / 2;
 		// For checking if star is still within window.
 		Rectangle screenRec = (Rectangle) {0, 0, curWidth, curHeight};
+		if (IsKeyReleased(KEY_SPACE)) noColor = !noColor;
 
-		for (int i = 0; i < MAX_STARS; i++) {
+		// Don't like this hack, but without it central star is slightly off-center after resizing window.
+		initNewStar(&stars[0], halfWidth, halfHeight);
+		for (int i = 1; i < MAX_STARS; i++) {
 			moveStar(&stars[i], halfDiffWidth, halfDiffHeight);
 			if (!CheckCollisionPointRec(stars[i].coords, screenRec))
 				initNewStar(&stars[i], halfWidth, halfHeight);
@@ -78,8 +87,17 @@ int main(void)
 		BeginDrawing();
 		{
 			ClearBackground(BLACK);
-			for(int i = 0; i < MAX_STARS; i++)
-				DrawCircleV(stars[i].coords, RADIUS, WHITE);
+			if(noColor) {
+				for(int i = 0; i < MAX_STARS; i++) {
+					DrawCircleV(stars[i].coords, RADIUS, WHITE);
+				}
+			}
+			else {
+				for(int i = 1; i < MAX_STARS; i++) {
+					DrawCircleV(stars[i].coords, RADIUS, stars[i].color);
+				}
+				DrawCircleV(stars[0].coords, RADIUS, WHITE);
+			}
 #ifdef DEBUG
 			DrawFPS(0, 0);
 #endif

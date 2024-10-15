@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#define MAX_STARS 32
+#define MAX_STARS 64
 #define RADIUS 5.0
 
 /* stars-c++.cpp - basically a port of stars2d.c to C++.                      *
@@ -22,6 +22,7 @@ public:
 	float speed;
 	float angle;
 	Vector2 coords;
+	Color color;
 
 	void moveStar(int xOffset, int yOffset)
 	{
@@ -33,6 +34,9 @@ public:
 		speed = generateRandomFloat(1.0, 10.0);
 		angle = generateRandomFloat(0.0, M_PI * 2);
 		coords = (Vector2) {(float) startX, (float) startY};
+		int temp = std::rand();
+		unsigned char *byte_ptr = (unsigned char *) &temp;
+		color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], byte_ptr[2]};
 	}
 };
 
@@ -46,6 +50,7 @@ int main(void)
 	const int minHeight = 240;
 	int halfHeight = defaultHeight / 2;
 	int halfWidth = defaultWidth / 2;
+	bool noColor = false; 
 
 	std::srand(time(NULL));
 	Star stars[MAX_STARS];
@@ -53,12 +58,13 @@ int main(void)
 	stars[0].angle = 0.0;
 	stars[0].speed = 0.0;
 	stars[0].coords = (Vector2) { (float)halfWidth, (float)halfHeight };
+	stars[0].color = WHITE;
 	for (int i = 1; i < MAX_STARS; i++) {
 		stars[i].resetPosition(halfWidth, halfHeight);
 	}
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(defaultWidth, defaultHeight, u8"stars-2d in C++.");
+	InitWindow(defaultWidth, defaultHeight, u8"stars-2d in C++. Press spacebar to change color mode.");
 	SetWindowMinSize(minWidth, minHeight);
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
@@ -72,6 +78,8 @@ int main(void)
 		int halfDiffHeight = (curHeight - prevHeight) / 2;
 		Rectangle screenRec = (Rectangle) {0, 0, (float) curWidth, (float) curHeight};
 		// For checking if star is still within window.
+		
+		// Don't like this hack, but without it central star is slightly off-center after resizing window.
 		stars[0].resetPosition(halfWidth, halfHeight);
 		for (int i = 1; i < MAX_STARS; i++) {
 			stars[i].moveStar(halfDiffWidth, halfDiffHeight);
@@ -81,8 +89,16 @@ int main(void)
 		BeginDrawing();
 		{
 			ClearBackground(BLACK);
-			for(int i = 0; i < MAX_STARS; i++)
-				DrawCircleV(stars[i].coords, RADIUS, WHITE);
+			if (noColor) {
+				for(int i = 0; i < MAX_STARS; i++)
+					DrawCircleV(stars[i].coords, RADIUS, WHITE);
+			}
+			else {
+				for(int i = 1; i < MAX_STARS; i++) {
+                                        DrawCircleV(stars[i].coords, RADIUS, stars[i].color);
+                                }
+                                DrawCircleV(stars[0].coords, RADIUS, WHITE);
+			}
 #ifdef DEBUG
 			DrawFPS(0, 0);
 #endif
