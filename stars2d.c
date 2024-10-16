@@ -38,7 +38,7 @@ void initNewStar(struct Star *projectile, int startX, int startY)
 	projectile->coords = (Vector2) {startX, startY};
 	int temp = rand();
 	char *byte_ptr = (char *) &temp;
-	projectile->color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], byte_ptr[3]};
+	projectile->color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], 0xFF};
 }
 
 int main(void)

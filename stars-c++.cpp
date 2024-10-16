@@ -36,7 +36,7 @@ public:
 		coords = (Vector2) {(float) startX, (float) startY};
 		int temp = std::rand();
 		unsigned char *byte_ptr = (unsigned char *) &temp;
-		color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], byte_ptr[2]};
+		color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], 0xFF};
 	}
 };
 
@@ -95,9 +95,9 @@ int main(void)
 			}
 			else {
 				for(int i = 1; i < MAX_STARS; i++) {
-                                        DrawCircleV(stars[i].coords, RADIUS, stars[i].color);
-                                }
-                                DrawCircleV(stars[0].coords, RADIUS, WHITE);
+					DrawCircleV(stars[i].coords, RADIUS, stars[i].color);
+				}
+				DrawCircleV(stars[0].coords, RADIUS, WHITE);
 			}
 #ifdef DEBUG
 			DrawFPS(0, 0);
