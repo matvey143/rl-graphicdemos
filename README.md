@@ -18,3 +18,5 @@ Alternatively you can link with library and header files somethere else but you 
 - [raysan5](github.com/raysan5) for developing [raylib](raylib.com), graphical library I used for this project. Raylib is a zlib licensed software. Read more at raylib-license.txt;
 - GitHub user [Sieep-coding](github.com/Sieep-coding). His GitHub repo [snow-simulation](github.com/Sieep-coding/snow-simulation) inspired this project;
 - User baz from Stack Overflow. I used his [implementation of random float number generation](https://stackoverflow.com/a/44105089);
+# Note
+**Warning**: these programs can potentialy trigger seizures for people with photosensitive epilepsy.
