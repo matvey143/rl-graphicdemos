@@ -76,9 +76,10 @@ int main(void)
 		// Needed to offset depending on changed window size
 		int halfDiffWidth = (curWidth - prevWidth) / 2;
 		int halfDiffHeight = (curHeight - prevHeight) / 2;
-		Rectangle screenRec = (Rectangle) {0, 0, (float) curWidth, (float) curHeight};
 		// For checking if star is still within window.
-		
+		Rectangle screenRec = (Rectangle) {0, 0, (float) curWidth, (float) curHeight};
+		// Switching color mode.
+		if (IsKeyReleased(KEY_SPACE)) noColor = !noColor;
 		// Don't like this hack, but without it central star is slightly off-center after resizing window.
 		stars[0].resetPosition(halfWidth, halfHeight);
 		for (int i = 1; i < MAX_STARS; i++) {
