@@ -16,7 +16,7 @@ std::uniform_int_distribution<unsigned char> distrColor(0, 255);
 std::uniform_real_distribution<float> distrSpeed(minSpeed, maxSpeed);
 std::uniform_real_distribution<float> distrZ(minZ, maxZ);
 
-#define MAX_STARS 30
+constexpr int maxStars = 30;
 
 class StarBall {
 public:
@@ -43,7 +43,7 @@ int main()
 	const float cameraPos = -10.0;
 	bool noColor = false;
 
-	StarBall stars[MAX_STARS];
+	StarBall stars[maxStars];
 
 	Camera3D camera;
 	camera.position = (Vector3) {0.0, 0.0, cameraPos};
@@ -58,7 +58,7 @@ int main()
 	SetTargetFPS(60);
 	while(!WindowShouldClose()) {
 		if (IsKeyReleased(KEY_SPACE)) noColor = !noColor;
-		for (int i = 0; i < MAX_STARS; i++)
+		for (int i = 0; i < maxStars; i++)
 		{
 			stars[i].moveStar();
 			if (stars[i].position.z <= cameraPos) {
@@ -70,12 +70,12 @@ int main()
 		BeginMode3D(camera);
 		{
 			if (noColor) {
-				for (int i = 0; i < MAX_STARS; i++) {
+				for (int i = 0; i < maxStars; i++) {
 					DrawSphere(stars[i].position, stars[i].radius, WHITE);
 				}
 			}
 			else {
-				for (int i = 0; i < MAX_STARS; i++) {
+				for (int i = 0; i < maxStars; i++) {
 					DrawSphere(stars[i].position, stars[i].radius, stars[i].color);
 				}
 			}
