@@ -1,5 +1,5 @@
-# rl-graphicgemos
-Collection of small graphical programs I made using raylib. I made a typo when making name of this repo, oops.
+# rl-graphicdemos
+Collection of small graphical programs I made using raylib.
 # Contents
 1. stars2d.c - From the center of window a lot of colorful (or colorless) balls come out with random speed and random angle. You can resize window and press spacebar to change color mode.
 1.1. stars-c++.cpp - basically the same as previous program but with few C++ featrues.
