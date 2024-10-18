@@ -5,6 +5,7 @@ Collection of small graphical programs I made using raylib.
 2. stars-c++.cpp - basically the same as previous program but with few C++ featrues.
 3. star-balls - 3d remake of stars. Now huge stars fly straight into camera, woah.
 # Building from source code
+I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
 ## Linux
 You need to add header and library files into this directory from [latest release](github.com/raysan5/raylib/releases) of raylib and run make. Dynamic linking is prefered because building produces few small executables all depending on the same library. So build process can look like this:
 ```
@@ -33,6 +34,7 @@ Alternatively you can link with library and header files somethere else but you 
 - Clean up code;
 - Publish releases;
 - More demos?
+- More buiding options?
 # Special thanks
 - [raysan5](github.com/raysan5) for developing [raylib](raylib.com), graphical library I used for this project. Raylib is a zlib licensed software. Read more at raylib-license.txt;
 - GitHub user [Sieep-coding](github.com/Sieep-coding). His GitHub repo [snow-simulation](github.com/Sieep-coding/snow-simulation) inspired this project;
