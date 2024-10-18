@@ -1,0 +1,11 @@
+# If you you are compiling outside of w64devkit you probably will want to add -static-libgcc -static-libstdc++
+LDFLAGS = raylib.dll -lgdi32 -lwinmm
+CFLAGS =
+
+all: star-balls stars2d stars-cpp
+star-balls:
+	$(CXX) -o star-balls.exe star-balls.cpp $(LDFLAGS) $(CFLAGS)
+stars2d:
+	$(CC) -o stars2d.exe stars2d.c $(LDFLAGS) $(CFLAGS)
+stars-cpp:
+	$(CXX) -o stars-cpp.exe stars-c++.cpp $(LDFLAGS) $(CFLAGS)
