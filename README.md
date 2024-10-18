@@ -19,9 +19,9 @@ You can also add compiler flags with CFLAGS, for example like this:
 make -j4 CFLAGS="-O2 -mtune=native -march=native"
 ```
 ## Windows
-Program called (w64devkit)[github.com/skeeto/w64devkit/releases] will be used for this compilation process. You will need to add raylib.dll and .h header files to this directory from [latest mingw-w64 release of raylib](github.com/raysan/raylib/releases). After that you need to run w64devkit.exe and type in following commands:
+Program called [w64devkit](github.com/skeeto/w64devkit/releases) will be used for this compilation process. You will need to add raylib.dll and .h header files to this directory from [latest mingw-w64 release of raylib](github.com/raysan/raylib/releases). After that you need to run w64devkit.exe and type in following commands:
 ```
-cd <directory where rep is located>/rl-graphicdemos
+cd <directory where repo is located>/rl-graphicdemos
 make -f Makefile-w64
 ```
 You can also add compiler flags with CFLAGS, for example like this:
