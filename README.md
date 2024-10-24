@@ -4,6 +4,7 @@ Collection of small graphical programs I made using raylib.
 1. stars2d.c - From the center of window a lot of colorful (or colorless) balls come out with random speed and random angle. You can resize window and press spacebar to change color mode.
 2. stars-c++.cpp - basically the same as previous program but with few C++ featrues.
 3. star-balls - 3d remake of stars. Now huge stars fly straight into camera, woah.
+4. oldZunLogo - My attempt at recreating ZUN intro used in older Touhou games. Work in progress.
 # Building from source code
 I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
 ## Linux
@@ -39,5 +40,6 @@ Alternatively you can link with library and header files somethere else but you 
 - [raysan5](https://www.github.com/raysan5) for developing [raylib](https://www.raylib.com), graphical library I used for this project. Raylib is a zlib licensed software. Read more at raylib-license.txt;
 - GitHub user [Sieep-coding](https://www.github.com/Sieep-coding). His GitHub repo [snow-simulation](https://www.github.com/Sieep-coding/snow-simulation) inspired this project;
 - User baz from Stack Overflow. I used his [implementation of random float number generation](https://www.stackoverflow.com/a/44105089);
+- Umefont developers. Umefont license can be be found at resources/umefont-license.txt.
 # Note
 **Warning**: I am no medical expert, but it looks like these programs can potentialy trigger seizures for people with photosensitive epilepsy.
