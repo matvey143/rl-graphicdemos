@@ -37,8 +37,8 @@ void initNewStar(struct Star *projectile, int startX, int startY)
 	projectile->angle = generateRandomFloat(0.0, M_PI * 2);
 	projectile->coords = (Vector2) {startX, startY};
 	int temp = rand();
-	char *byte_ptr = (char *) &temp;
-	projectile->color = (Color) {byte_ptr[0], byte_ptr[1], byte_ptr[2], 0xFF};
+	char *byte = (char *) &temp;
+	projectile->color = (Color) {byte[0], byte[1], byte[2], 0xFF};
 }
 
 int main(void)
@@ -55,13 +55,15 @@ int main(void)
 
 	srand(time(NULL));
 	struct Star stars[MAX_STARS];
-	stars[0] = (struct Star) {0.0, 0.0, (Vector2) {halfWidth, halfHeight}, WHITE};
+	stars[0] = (struct Star) {0.0, 0.0,
+		(Vector2) {halfWidth, halfHeight}, WHITE};
 	for (int i = 1; i < MAX_STARS; i++) {
 		initNewStar(&stars[i], halfWidth, halfHeight);
 	}
 
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(defaultWidth, defaultHeight, u8"stars-2d. Press spacebar to change color mode.");
+	InitWindow(defaultWidth, defaultHeight,
+			u8"stars-2d. Press spacebar to change color mode.");
 	SetWindowMinSize(minWidth, minHeight);
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
