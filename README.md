@@ -6,7 +6,8 @@ Collection of small graphical programs I made using raylib.
 3. star-balls - 3d remake of stars. Now huge stars fly straight into camera, woah.
 4. oldZunLogo - My attempt at recreating ZUN intro used in older Touhou games. Work in progress.
 # Building from source code
-I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub. Also please note that, in couple places of this repo M_PI was used. It is non-standard macro added by GNU in math.h, defining Pi number. If you want to build this project in environment what doesn't support GNU extensions you will need to define those macros yourself.
+I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
+Also please note that, in couple places of this repo M_PI was used. It is non-standard macro added by GNU in math.h, defining Pi number. If you want to build this project in environment what doesn't support GNU extensions you will need to define those macros yourself.
 ## Linux
 You need to add header and library files into this directory from [latest release](https://www.github.com/raysan5/raylib/releases) of raylib and run make. Dynamic linking is prefered because building produces few small executables all depending on the same library. So build process can look like this:
 ```
