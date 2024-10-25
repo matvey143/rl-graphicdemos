@@ -7,6 +7,7 @@ Collection of small graphical programs I made using raylib.
 4. oldZunLogo - My attempt at recreating ZUN intro used in older Touhou games. Work in progress.
 # Building from source code
 I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
+
 Also please note that, in couple places of this repo M_PI was used. It is non-standard macro added by GNU in math.h, defining Pi number. If you want to build this project in environment what doesn't support GNU extensions you will need to define those macros yourself.
 ## Linux
 You need to add header and library files into this directory from [latest release](https://www.github.com/raysan5/raylib/releases) of raylib and run make. Dynamic linking is prefered because building produces few small executables all depending on the same library. So build process can look like this:
@@ -32,10 +33,12 @@ make -f Makefile-w64 -j4 CFLAGS="-O2 -mtune=native -march=native"
 ```
 Alternatively you can link with library and header files somethere else but you would need to edit Makefile to do so.
 # TODO
+- Finish oldZunLogo.c
 - Clean up code;
 - Publish releases;
 - More demos?
 - More buiding options?
+- Maybe do something about M_PI?
 # Special thanks
 - [raysan5](https://www.github.com/raysan5) for developing [raylib](https://www.raylib.com), graphical library I used for this project. Raylib is a zlib licensed software. Read more at raylib-license.txt;
 - GitHub user [Sieep-coding](https://www.github.com/Sieep-coding). His GitHub repo [snow-simulation](https://www.github.com/Sieep-coding/snow-simulation) inspired this project;
