@@ -5,14 +5,14 @@
 // Thanks to github user cash-i1 I figured out how to handle wall hits.
 // github.com/cash-i1/raylib-dvd-logo 
 
-float starAngle = M_PI;
+#define STAR_AMOUNT 40
 
 float randomFloat(float minimum, float maximum) {
 	float scale = rand() / (float) RAND_MAX;
 	return minimum + scale * (maximum - minimum);
 }
 
-struct Star {
+struct bgStar {
 	Vector2 coords;
 	float speed;
 };
@@ -23,6 +23,12 @@ struct IntroBall {
 	float velX;
 	float velY;
 };
+
+void moveStar(struct bgStar *star, float angle)
+{
+	star->coords.x += cos(angle) * speed;
+	star->coords.y += sin(angle) * speed;
+}
 
 //TODO: Needs agjustments.
 void moveBall(struct IntroBall *ball_ptr)
@@ -57,6 +63,10 @@ int main(void)
 	balls[1].color = (Color) {0x00, 0x00, 0x9C, 0xFF};
 	balls[2].color = (Color) {0x00, 0x00, 0xEF, 0xFF};
 	balls[3].color = (Color) {0x63, 0x75, 0xFF, 0xFF};
+
+	// Initiating stars in background.
+	float starAngle = M_PI;
+	struct bgStar stars[STAR_AMOUNT];
 
 	// Needs further adjustments.
 	Camera2D camera;
