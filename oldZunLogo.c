@@ -40,11 +40,11 @@ int main(void)
 		//Need to move balls apart.
 		for(int j = 0; j < 10 * i; j++) moveBall(&balls[i]);
 	}
-	// This colors are placeholders. TODO: change them to proper colors.
-	balls[0].color = BLUE;
-	balls[1].color = RED;
-	balls[2].color = GREEN;
-	balls[3].color = YELLOW;
+	// These colors came from picking colors from screenshot.
+	balls[0].color = (Color) {0x00, 0x00, 0x63, 0xFF};
+	balls[1].color = (Color) {0x00, 0x00, 0x9C, 0xFF};
+	balls[2].color = (Color) {0x00, 0x00, 0xEF, 0xFF};
+	balls[3].color = (Color) {0x63, 0x75, 0xFF, 0xFF};
 
 	// Needs further adjustments.
 	Camera2D camera;
