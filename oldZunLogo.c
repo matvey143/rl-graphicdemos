@@ -1,9 +1,21 @@
 #include "raylib.h"
 #include <stdbool.h>
 #include <stdlib.h>
-
+#include <math.h>
 // Thanks to github user cash-i1 I figured out how to handle wall hits.
 // github.com/cash-i1/raylib-dvd-logo 
+
+float starAngle = M_PI;
+
+float randomFloat(float minimum, float maximum) {
+	float scale = rand() / (float) RAND_MAX;
+	return minimum + scale * (maximum - minimum);
+}
+
+struct Star {
+	Vector2 coords;
+	float speed;
+};
 
 struct IntroBall {
 	Vector2 coords;
