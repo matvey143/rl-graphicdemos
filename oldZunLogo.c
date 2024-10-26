@@ -2,12 +2,16 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
-// Thanks to github user cash-i1 I figured out how to handle wall hits.
-// github.com/cash-i1/raylib-dvd-logo 
 
-#define STAR_AMOUNT 40
+// Defining borders of camera area.
+// They are macros because they are used by two different functions.
+#define MIN_X -80.0f
+#define MAX_X  80.0f
+#define MIN_Y -30.0f
+#define MAX_Y  30.0f
 
-float randomFloat(float minimum, float maximum) {
+float randomFloat(float minimum, float maximum)
+{
 	float scale = rand() / (float) RAND_MAX;
 	return minimum + scale * (maximum - minimum);
 }
@@ -24,24 +28,38 @@ struct IntroBall {
 	float velY;
 };
 
+void resetStar(struct bgStar *star)
+{
+	star->coords.x = randomFloat(MIN_X, MAX_X);
+	star->coords.y = randomFloat(MIN_Y, MAX_Y);
+
+	const static float minSpeed = 5.0f, maxSpeed = 10.0f;
+	star->speed = randomFloat(minSpeed, maxSpeed);
+}
+
 void moveStar(struct bgStar *star, float angle)
 {
-	star->coords.x += cos(angle) * speed;
-	star->coords.y += sin(angle) * speed;
+	star->coords.x += cos(angle) * star->speed;
+	star->coords.y += sin(angle) * star->speed;
+
+	// Checking if star is out of bounds
+	static const Rectangle collisionBox = {MIN_X, MIN_Y,
+		MAX_X - MIN_X, MAX_Y - MIN_Y};
+	if (!CheckCollisionPointRec(star->coords, collisionBox))
+		resetStar(star);
 }
 
 //TODO: Needs agjustments.
+// Thanks to github user cash-i1 I figured out how to handle wall hits.
+// github.com/cash-i1/raylib-dvd-logo 
 void moveBall(struct IntroBall *ball_ptr)
 {
 	ball_ptr->coords.x += ball_ptr->velX;
 	ball_ptr->coords.y += ball_ptr->velY;
-	// Changing direction of ball if necessary.
-	const static float minX = -80.0, maxX = 80.0;
-	const static float minY = -30.0, maxY = 30.0;
-	if (ball_ptr->coords.x >= maxX) ball_ptr->velX = -1.0;
-	if (ball_ptr->coords.x <= minX) ball_ptr->velX = 1.0;
-	if (ball_ptr->coords.y >= maxY) ball_ptr->velY = -1.0;
-	if (ball_ptr->coords.y <= minY) ball_ptr->velY = 1.0;
+	if (ball_ptr->coords.x >= MAX_X) ball_ptr->velX = -1.0;
+	if (ball_ptr->coords.x <= MIN_X) ball_ptr->velX = 1.0;
+	if (ball_ptr->coords.y >= MAX_Y) ball_ptr->velY = -1.0;
+	if (ball_ptr->coords.y <= MIN_Y) ball_ptr->velY = 1.0;
 }
 
 // I wanted to recreate old ZUN intro (Touhou 1-3).
@@ -65,8 +83,10 @@ int main(void)
 	balls[3].color = (Color) {0x63, 0x75, 0xFF, 0xFF};
 
 	// Initiating stars in background.
-	float starAngle = M_PI;
-	struct bgStar stars[STAR_AMOUNT];
+	const int starAmount = 12;
+	float angle = M_PI;
+	struct bgStar stars[starAmount];
+	for (int i = 0; i < starAmount; i++) resetStar(&stars[i]);
 
 	// Needs further adjustments.
 	Camera2D camera;
@@ -87,11 +107,16 @@ int main(void)
 	
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
+		for (int i = 0; i < starAmount; i++) moveStar(&stars[i], angle);
 		for (int i = 0; i < ballAmount; i++) moveBall(&balls[i]);
+
 		BeginTextureMode(camTexture);
 		{
 			ClearBackground(BLACK);
 			BeginMode2D(camera);
+			for(int i = 0; i < starAmount; i++) {
+				DrawPixelV(stars[i].coords, WHITE);
+			}
 			for(int i = 0; i < ballAmount; i++) {
 				DrawCircleV(balls[i].coords, radius, balls[i].color);
 			}
