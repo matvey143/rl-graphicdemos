@@ -84,7 +84,7 @@ int main(void)
 
 	// Initiating stars in background.
 	const int starAmount = 12;
-	float angle = M_PI;
+	float angle = PI;
 	struct bgStar stars[starAmount];
 	for (int i = 0; i < starAmount; i++) resetStar(&stars[i]);
 

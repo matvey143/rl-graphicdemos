@@ -11,7 +11,7 @@ constexpr float maxSpeed = 10.0;
 //Initializing random number generator for class Star
 std::random_device randDevice;
 std::mt19937 rng(randDevice());
-std::uniform_real_distribution<float> randomAngle(0, 2 * M_PI);
+std::uniform_real_distribution<float> randomAngle(0, PI + PI);
 std::uniform_real_distribution<float> randomSpeed(minSpeed, maxSpeed);
 std::uniform_int_distribution<unsigned char> randomColor(0, 0xFF);
 

@@ -34,7 +34,7 @@ void moveStar(struct Star *ptr_star, int xOffset, int yOffset)
 void initNewStar(struct Star *projectile, int startX, int startY)
 {
 	projectile->speed = generateRandomFloat(1.0, 10.0);
-	projectile->angle = generateRandomFloat(0.0, M_PI * 2);
+	projectile->angle = generateRandomFloat(0.0, PI + PI);
 	projectile->coords = (Vector2) {startX, startY};
 	int temp = rand();
 	char *byte = (char *) &temp;
