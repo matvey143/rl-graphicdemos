@@ -5,10 +5,11 @@
 
 // Defining borders of camera area.
 // They are macros because they are used by two different functions.
+// Might be messy hardcoded crap, but it does it's job.
 #define MIN_X -80.0f
-#define MAX_X  80.0f
+#define MAX_X  140.0f
 #define MIN_Y -30.0f
-#define MAX_Y  30.0f
+#define MAX_Y  60.0f
 
 float randomFloat(float minimum, float maximum)
 {
@@ -33,7 +34,7 @@ void resetStar(struct bgStar *star)
 	star->coords.x = randomFloat(MIN_X, MAX_X);
 	star->coords.y = randomFloat(MIN_Y, MAX_Y);
 
-	const static float minSpeed = 5.0f, maxSpeed = 10.0f;
+	const static float minSpeed = 1.0f, maxSpeed = 5.0f;
 	star->speed = randomFloat(minSpeed, maxSpeed);
 }
 
@@ -109,6 +110,8 @@ int main(void)
 	while (!WindowShouldClose()) {
 		for (int i = 0; i < starAmount; i++) moveStar(&stars[i], angle);
 		for (int i = 0; i < ballAmount; i++) moveBall(&balls[i]);
+		angle += 0.01;
+		if (angle > PI + PI) angle -= PI + PI;
 
 		BeginTextureMode(camTexture);
 		{
