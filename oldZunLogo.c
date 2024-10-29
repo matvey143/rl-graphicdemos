@@ -6,10 +6,10 @@
 // Defining borders of camera area.
 // They are macros because they are used by two different functions.
 // Might be messy hardcoded crap, but it does it's job.
-#define MIN_X -80.0f
-#define MAX_X  140.0f
-#define MIN_Y -30.0f
-#define MAX_Y  60.0f
+#define DEFAULT_MIN_X  0.0f
+#define DEFAULT_MAX_X  640.0f
+#define DEFAULT_MIN_Y  0.0f
+#define DEFAULT_MAX_Y  240.0f
 
 struct bgStar {
 	Vector2 coords;
@@ -29,13 +29,15 @@ float randomFloat(float minimum, float maximum)
 	return minimum + scale * (maximum - minimum);
 }
 
-
-void resetStar(struct bgStar *star)
+// Both of these are a mess
+void resetStar(struct bgStar *star, float widthScale, float heightScale)
 {
-	star->coords.x = randomFloat(MIN_X, MAX_X);
-	star->coords.y = randomFloat(MIN_Y, MAX_Y);
+	star->coords.x = randomFloat(DEFAULT_MIN_X * widthScale,
+			DEFAULT_MAX_X * widthScale);
+	star->coords.y = randomFloat(DEFAULT_MIN_Y * heightScale,
+			DEFAULT_MAX_Y * heightScale);
 
-	const static float minSpeed = 1.0f, maxSpeed = 5.0f;
+	const static float minSpeed = 3.0f, maxSpeed = 10.0f;
 	star->speed = randomFloat(minSpeed, maxSpeed);
 }
 
@@ -45,12 +47,14 @@ void moveStar(struct bgStar *star, float angle,
 	star->coords.x += cos(angle) * star->speed;
 	star->coords.y += sin(angle) * star->speed;
 
-	static const float height = MAX_X - MIN_X, width = MAX_Y - MIN_Y;
-	// Checking if star is out of bounds
-	Rectangle collisionBox = {MIN_X * widthScale, MIN_Y * heightScale,
-		width * widthScale, height * heightScale};
-	if (!CheckCollisionPointRec(star->coords, collisionBox))
-		resetStar(star);
+	if (star->coords.x >= DEFAULT_MAX_X * widthScale)
+		resetStar(star, widthScale, heightScale);
+	else if (star->coords.x <= DEFAULT_MIN_X * widthScale)
+		resetStar(star, widthScale, heightScale);
+	else if (star->coords.y >= DEFAULT_MAX_Y * heightScale)
+		resetStar(star, widthScale, heightScale);
+	else if (star->coords.y <= DEFAULT_MIN_Y * heightScale)
+		resetStar(star, widthScale, heightScale);
 }
 
 //TODO: Needs agjustments.
@@ -60,21 +64,35 @@ void moveBall(struct IntroBall *ball_ptr, float widthScale, float heightScale)
 {
 	ball_ptr->coords.x += ball_ptr->velX;
 	ball_ptr->coords.y += ball_ptr->velY;
-	if (ball_ptr->coords.x >= MAX_X * widthScale) ball_ptr->velX = -1.0;
-	if (ball_ptr->coords.x <= MIN_X * widthScale) ball_ptr->velX = 1.0;
-	if (ball_ptr->coords.y >= MAX_Y * heightScale) ball_ptr->velY = -1.0;
-	if (ball_ptr->coords.y <= MIN_Y * heightScale) ball_ptr->velY = 1.0;
+	if (ball_ptr->coords.x >= DEFAULT_MAX_X * widthScale)
+		ball_ptr->velX = -1.0;
+	if (ball_ptr->coords.x <= DEFAULT_MIN_X * widthScale)
+		ball_ptr->velX = 1.0;
+	if (ball_ptr->coords.y >= DEFAULT_MAX_Y * heightScale)
+		ball_ptr->velY = -1.0;
+	if (ball_ptr->coords.y <= DEFAULT_MIN_Y * heightScale)
+		ball_ptr->velY = 1.0;
 }
 
 // TODO: make window resizable
 // I wanted to recreate old ZUN intro (Touhou 1-3).
 int main(void)
 {
-	const float radius = 20.0;
+	const float ballRadius = 30.0f;
+	const float starSize = 2.0f;
 	const int tempBallAmount = 3;
 
 	struct IntroBall mainBall;
-	struct IntroBall tempBalls[ballAmount];
+	mainBall.coords = (Vector2) {-6.0f, -6.0f};
+	mainBall.velX = -1.0f;
+	mainBall.velY = -1.0f;
+
+	struct IntroBall tempBalls[tempBallAmount];
+	for (int i = 0; i < tempBallAmount; i++) {
+		tempBalls[i].coords = mainBall.coords; 
+		tempBalls[i].velX = mainBall.velX; 
+		tempBalls[i].velY = mainBall.velY; 
+	}
 
 	// TODO: there are long term desync between tempBalls if window is resized.
 	// Need to adjust program to address this behavour. 
@@ -85,17 +103,18 @@ int main(void)
 	tempBalls[2].color = (Color) {0x63, 0x75, 0xFF, 0xFF};
 
 	// Initiating stars in background.
-	const int starAmount = 12;
+	const int starAmount = 30;
 	float angle = PI;
 	struct bgStar stars[starAmount];
-	for (int i = 0; i < starAmount; i++) resetStar(&stars[i]);
+	for (int i = 0; i < starAmount; i++)
+		resetStar(&stars[i], 1.0, 1.0);
 
 	// Needs further adjustments.
 	Camera2D camera;
 	camera.target = (Vector2) {0.0, 0.0};
-	camera.offset = (Vector2) {240.0, 80.0};
+	camera.offset = (Vector2) {0.0, 0.0};
 	camera.rotation = 0.0;
-	camera.zoom = 3.0;
+	camera.zoom = 1.0;
 
 	// Might adjust program to make window resizable.
 	const int defaultWidth = 640, defaultHeight = 480;
@@ -125,9 +144,14 @@ int main(void)
 
 		for (int i = 0; i < starAmount; i++)
 			moveStar(&stars[i], angle, widthScale, heightScale);
-		for (int i = 0; i < ballAmount; i++)
-			moveBall(&tempBalls[i], widthScale, heightScale);
-		angle += 0.01;
+
+		moveBall(&mainBall, widthScale, heightScale);
+		for (int i = 0; i < tempBallAmount; i++) {
+			for (int j = 0; j < (i + 1) * 10; j++) {
+				moveBall(&tempBalls[i], widthScale, heightScale);
+			}
+		}
+		angle += 0.001;
 		// Basically a reset every full turn.
 		if (angle > PI + PI) angle -= PI + PI;
 
@@ -136,10 +160,12 @@ int main(void)
 			ClearBackground(BLACK);
 			BeginMode2D(camera);
 			for(int i = 0; i < starAmount; i++) {
-				DrawPixelV(stars[i].coords, WHITE);
+				DrawCircleV(stars[i].coords, starSize, WHITE);
 			}
-			for(int i = 0; i < ballAmount; i++) {
-				DrawCircleV(tempBalls[i].coords, radius, tempBalls[i].color);
+			DrawCircleV(mainBall.coords, ballRadius, mainBall.color);
+			for(int i = 0; i < tempBallAmount; i++) {
+				DrawCircleV(tempBalls[i].coords, 
+						ballRadius, tempBalls[i].color);
 			}
 			EndMode2D();
 		}
@@ -157,6 +183,12 @@ int main(void)
 		EndDrawing();
 		prevWidth = curWidth;
 		prevHeight = curHeight;
+		// Reseting 
+		for (int i = 0; i < tempBallAmount; i++) {
+			tempBalls[i].coords = mainBall.coords; 
+			tempBalls[i].velX = mainBall.velX; 
+			tempBalls[i].velY = mainBall.velY; 
+		}
 	}
 	CloseWindow();
 	return 0;
