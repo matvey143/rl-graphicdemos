@@ -3,8 +3,8 @@ Collection of small graphical programs I made using raylib.
 # Contents
 1. stars2d.c - From the center of window a lot of colorful (or colorless) balls come out with random speed and random angle. You can resize window and press spacebar to change color mode.
 2. stars-c++.cpp - basically the same as previous program but with few C++ featrues.
-3. star-balls - 3d remake of stars. Now huge stars fly straight into camera, woah.
-4. oldZunLogo - My attempt at recreating ZUN intro used in older Touhou games. Work in progress.
+3. star-balls.cpp - 3d remake of stars. Now huge stars fly straight into camera, woah.
+4. oldZunLogo.c - My attempt at recreating ZUN intro used in older Touhou games.
 # Building from source code
 I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
 ## Linux
@@ -31,7 +31,6 @@ make -f Makefile-w64 -j4 CFLAGS="-O2 -mtune=native -march=native"
 ```
 Alternatively you can link with library and header files somethere else but you would need to edit Makefile to do so.
 # TODO
-- Finish oldZunLogo.c
 - Clean up code;
 - Publish releases;
 - More demos?
