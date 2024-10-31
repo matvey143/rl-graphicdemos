@@ -137,7 +137,7 @@ int main(void)
 		float widthScale = (float) curWidth / defaultWidth;
 		float heightScale = (float) curHeight / defaultHeight;
 		// Window is resized.
-		if (curWidth != prevWidth && curHeight != prevHeight) {
+		if (curWidth != prevWidth || curHeight != prevHeight) {
 			UnloadRenderTexture(camTexture);
 			camTexture = LoadRenderTexture(curWidth, curHeight/2);
 		}
