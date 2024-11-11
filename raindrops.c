@@ -5,6 +5,7 @@
 // TODO: make a rain drop effect on a puddle.
 // Density of raindrop should not change after altering resolution.
 // I might want to use some data structure for this.
+// Likely will be std::vector of c++.
 
 float randomFloat(float minimum, float maximum)
 {
@@ -15,13 +16,14 @@ float randomFloat(float minimum, float maximum)
 struct Raindrop {
 	Vector2 coords;
 	int lifeTime;
+	float radius;
 };
 
 void resetDrop(struct Raindrop *drop, int screenX, int screenY)
 {
 	drop->coords.x = randomFloat(0.0, float(screenX));
 	drop->coords.y = randomFloat(0.0, float(screenY));
-	// Res
+	// TODO: add radius and lifetime.
 }
 
 int main(void)
