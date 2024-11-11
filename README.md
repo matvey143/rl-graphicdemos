@@ -5,6 +5,7 @@ Collection of small graphical programs I made using raylib.
 2. stars-c++.cpp - basically the same as previous program but with few C++ featrues.
 3. star-balls.cpp - 3d remake of stars. Now huge stars fly straight into camera, woah.
 4. oldZunLogo.c - My attempt at recreating ZUN intro used in older Touhou games.
+5. raindrops.c - WIP animation. 
 # Building from source code
 I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
 ## Linux

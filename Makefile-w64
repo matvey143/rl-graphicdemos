@@ -2,7 +2,7 @@
 LDFLAGS = raylib.dll -lgdi32 -lwinmm
 CFLAGS =
 
-all: star-balls stars2d stars-cpp oldZunLogo
+all: star-balls stars2d stars-cpp oldZunLogo raindrops
 star-balls:
 	$(CXX) -o star-balls.exe star-balls.cpp $(LDFLAGS) $(CFLAGS)
 stars2d:
@@ -11,3 +11,5 @@ stars-cpp:
 	$(CXX) -o stars-cpp.exe stars-c++.cpp $(LDFLAGS) $(CFLAGS)
 oldZunLogo:
 	$(CC) -o oldZunLogo.exe oldZunLogo.c $(LDFLAGS) $(CFLAGS)
+raindrops:
+	$(CC) -o raindrops.exe raindrops.c $(LDFLAFS) $(CFLAGS)
