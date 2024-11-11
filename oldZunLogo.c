@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 // Defining borders of camera area.
 // They are macros because they are used by two different functions.
@@ -81,6 +82,8 @@ int main(void)
 	const float ballRadius = 30.0f;
 	const float starSize = 2.0f;
 	const int tempBallAmount = 3;
+
+	srand(time(NULL));
 
 	struct IntroBall mainBall;
 	mainBall.coords = (Vector2) {-6.0f, -6.0f};
