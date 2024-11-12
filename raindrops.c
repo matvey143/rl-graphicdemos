@@ -32,6 +32,7 @@ void spreadDrop(Raindrop *drop)
 	const static unsigned char alphaPerFrame = 5;
 
 	drop->radius += radiusPerFrame;
+	drop->lifeTime++;
 	if (drop->alpha > alphaPerFrame)
 		drop->alpha = 0;
 	else
@@ -40,8 +41,8 @@ void spreadDrop(Raindrop *drop)
 
 void resetDrop(Raindrop *drop, int screenX, int screenY)
 {
-	drop->coords.x = randomFloat(0.0, float(screenX));
-	drop->coords.y = randomFloat(0.0, float(screenY));
+	drop->coords.x = randomFloat(0.0, (float) screenX);
+	drop->coords.y = randomFloat(0.0, (float) screenY);
 	drop->radius = 0.0;
 	drop->alpha = 0xFF;
 
@@ -55,7 +56,7 @@ int main(void)
 {
 	const int defaultWidth = 640, defaultHeight = 480;
 	const Color waterColor = (Color) {0x02, 0x25, 0x2D, 0xFF};
-	const int pixelsPerDrop = 100;
+	const int pixelsPerDrop = 30000;
 
 	int curWidth = defaultWidth, curHeight =  defaultHeight;
 	// IF in WHILE should be triggered as soon as loop starts. 
@@ -77,17 +78,24 @@ int main(void)
 			dropAmount = curWidth * curHeight / pixelsPerDrop;
 			drops = realloc(drops, dropAmount * sizeof (Raindrop));
 			for (int i = 0; i < dropAmount; i++)
-				resetDrops(*drops[i], curWidth, curHeight);
+				resetDrop(&drops[i], curWidth, curHeight);
 		}
 		// TODO: Here should be events
 		for (int i = 0; i < dropAmount; i++) {
-			if (drops[i]->alpha != 0)
-				spreadDrop();
+			if (drops[i].alpha != 0)
+				spreadDrop(&drops[i]);
 			else
+				resetDrop(&drops[i], curWidth, curHeight);
 		}
 
 		BeginDrawing();
 		ClearBackground(waterColor);
+		for (int i = 0; i < dropAmount; i++) {
+			if (drops[i].lifeTime > 0) {
+				DrawCircleLinesV(drops[i].coords, drops[i].radius,
+						(Color) {0xFF, 0xFF, 0xFF, drops[i].alpha});
+			}
+		}
 		EndDrawing();
 
 		prevWidth = curWidth;
