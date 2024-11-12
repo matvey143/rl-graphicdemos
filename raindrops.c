@@ -29,11 +29,11 @@ float randomFloat(float minimum, float maximum)
 void spreadDrop(Raindrop *drop)
 {
 	const static float radiusPerFrame = 0.5f;
-	const static unsigned char alphaPerFrame = 5;
+	const static unsigned char alphaPerFrame = 2;
 
 	drop->radius += radiusPerFrame;
 	drop->lifeTime++;
-	if (drop->alpha > alphaPerFrame)
+	if (drop->alpha < alphaPerFrame)
 		drop->alpha = 0;
 	else
 		drop->alpha -= alphaPerFrame;
@@ -48,7 +48,7 @@ void resetDrop(Raindrop *drop, int screenX, int screenY)
 
 	// Negative values means delay.
 	const static int minDelay = -5;
-	const static int maxDelay = -20;
+	const static int maxDelay = -40;
 	drop->lifeTime = randomInt(minDelay, maxDelay);
 }
 
@@ -56,7 +56,7 @@ int main(void)
 {
 	const int defaultWidth = 640, defaultHeight = 480;
 	const Color waterColor = (Color) {0x02, 0x25, 0x2D, 0xFF};
-	const int pixelsPerDrop = 30000;
+	const int pixelsPerDrop = 10000;
 
 	int curWidth = defaultWidth, curHeight =  defaultHeight;
 	// IF in WHILE should be triggered as soon as loop starts. 
