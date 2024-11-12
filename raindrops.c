@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-// TODO: make a rain drop effect on a puddle.
 // Density of raindrop should not change after altering resolution.
 // I might want to use some data structure for this.
-// Likely will be std::vector of c++.
 
 typedef struct {
 	Vector2 coords;
@@ -17,7 +15,7 @@ typedef struct {
 // randomInt(1, 6) should be similiar to dice roll
 int randomInt(int minimum, int maximum)
 {
-	return rand() % maximum - minimum + 2;
+	return rand() % (maximum - minimum + 1) + minimum;
 }
 
 float randomFloat(float minimum, float maximum)
@@ -28,15 +26,17 @@ float randomFloat(float minimum, float maximum)
 
 void spreadDrop(Raindrop *drop)
 {
-	const static float radiusPerFrame = 0.5f;
-	const static unsigned char alphaPerFrame = 2;
-
-	drop->radius += radiusPerFrame;
 	drop->lifeTime++;
-	if (drop->alpha < alphaPerFrame)
-		drop->alpha = 0;
-	else
-		drop->alpha -= alphaPerFrame;
+	if(drop->lifeTime > 0) {
+		const static float radiusPerFrame = 0.5f;
+		const static unsigned char alphaPerFrame = 2;
+
+		drop->radius += radiusPerFrame;
+		if (drop->alpha < alphaPerFrame)
+			drop->alpha = 0;
+		else
+			drop->alpha -= alphaPerFrame;
+	}
 }
 
 void resetDrop(Raindrop *drop, int screenX, int screenY)
@@ -47,8 +47,8 @@ void resetDrop(Raindrop *drop, int screenX, int screenY)
 	drop->alpha = 0xFF;
 
 	// Negative values means delay.
-	const static int minDelay = -5;
-	const static int maxDelay = -40;
+	const static int minDelay = -40;
+	const static int maxDelay = -2;
 	drop->lifeTime = randomInt(minDelay, maxDelay);
 }
 
@@ -80,7 +80,6 @@ int main(void)
 			for (int i = 0; i < dropAmount; i++)
 				resetDrop(&drops[i], curWidth, curHeight);
 		}
-		// TODO: Here should be events
 		for (int i = 0; i < dropAmount; i++) {
 			if (drops[i].alpha != 0)
 				spreadDrop(&drops[i]);
