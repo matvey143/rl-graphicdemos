@@ -3,7 +3,7 @@
 #include <time.h>
 
 // Density of raindrop should not change after altering resolution.
-// I might want to use some data structure for this.
+// TODO: add more chaos maybe?
 
 typedef struct {
 	Vector2 coords;
@@ -46,9 +46,9 @@ void resetDrop(Raindrop *drop, int screenX, int screenY)
 	drop->radius = 0.0;
 	drop->alpha = 0xFF;
 
-	// Negative values means delay.
-	const static int minDelay = -40;
-	const static int maxDelay = -2;
+	// Negative values means delay before apearing on screen.
+	const static int minDelay = -80;
+	const static int maxDelay = -5;
 	drop->lifeTime = randomInt(minDelay, maxDelay);
 }
 
