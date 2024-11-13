@@ -12,4 +12,4 @@ stars-cpp:
 oldZunLogo:
 	$(CC) -o oldZunLogo.exe oldZunLogo.c $(LDFLAGS) $(CFLAGS)
 raindrops:
-	$(CC) -o raindrops.exe raindrops.c $(LDFLAFS) $(CFLAGS)
+	$(CC) -o raindrops.exe raindrops.c $(LDFLAGS) $(CFLAGS)
