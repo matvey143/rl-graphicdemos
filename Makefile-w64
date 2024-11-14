@@ -1,14 +1,15 @@
 # If you you are compiling outside of w64devkit you probably will want to add -static-libgcc -static-libstdc++
 LDFLAGS = raylib.dll -lgdi32 -lwinmm
 CFLAGS =
+CXXFLAGS =
 
 all: star-balls stars2d stars-cpp oldZunLogo raindrops
 star-balls:
-	$(CXX) -o star-balls.exe star-balls.cpp $(LDFLAGS) $(CFLAGS)
+	$(CXX) -o star-balls.exe star-balls.cpp $(LDFLAGS) $(CFLAGS) $(CXXFLAGS)
 stars2d:
 	$(CC) -o stars2d.exe stars2d.c $(LDFLAGS) $(CFLAGS)
 stars-cpp:
-	$(CXX) -o stars-cpp.exe stars-c++.cpp $(LDFLAGS) $(CFLAGS)
+	$(CXX) -o stars-cpp.exe stars-c++.cpp $(LDFLAGS) $(CFLAGS) $(CXXFLAGS)
 oldZunLogo:
 	$(CC) -o oldZunLogo.exe oldZunLogo.c $(LDFLAGS) $(CFLAGS)
 raindrops:
