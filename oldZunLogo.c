@@ -75,14 +75,9 @@ void moveBall(struct IntroBall *ball_ptr, float widthScale, float heightScale)
 		ball_ptr->velY = 1.0;
 }
 
-// TODO: make window resizable
 // I wanted to recreate old ZUN intro (Touhou 1-3).
 int main(void)
 {
-	const float ballRadius = 30.0f;
-	const float starSize = 2.0f;
-	const int tempBallAmount = 3;
-
 	srand(time(NULL));
 
 	struct IntroBall mainBall;
@@ -90,6 +85,7 @@ int main(void)
 	mainBall.velX = -1.0f;
 	mainBall.velY = -1.0f;
 
+	const int tempBallAmount = 3;
 	struct IntroBall tempBalls[tempBallAmount];
 	for (int i = 0; i < tempBallAmount; i++) {
 		tempBalls[i].coords = mainBall.coords; 
@@ -97,8 +93,6 @@ int main(void)
 		tempBalls[i].velY = mainBall.velY; 
 	}
 
-	// TODO: there are long term desync between tempBalls if window is resized.
-	// Need to adjust program to address this behavour. 
 	// These colors came from picking colors of screenshot, might be inaccurate.
 	mainBall.color = (Color) {0x00, 0x00, 0x63, 0xFF};
 	tempBalls[0].color = (Color) {0x00, 0x00, 0x9C, 0xFF};
@@ -106,11 +100,9 @@ int main(void)
 	tempBalls[2].color = (Color) {0x63, 0x75, 0xFF, 0xFF};
 
 	// Initiating stars in background.
-	const int starAmount = 30;
+	int starAmount = 1;
 	float angle = PI;
-	struct bgStar stars[starAmount];
-	for (int i = 0; i < starAmount; i++)
-		resetStar(&stars[i], 1.0, 1.0);
+	struct bgStar *stars = malloc(starAmount * sizeof (struct bgStar));
 
 	// Needs further adjustments.
 	Camera2D camera;
@@ -141,6 +133,12 @@ int main(void)
 		float heightScale = (float) curHeight / defaultHeight;
 		// Window is resized.
 		if (curWidth != prevWidth || curHeight != prevHeight) {
+			const static int pixelsPerStar = 15000;
+			starAmount = curWidth * curHeight / pixelsPerStar;
+			stars = realloc(stars, starAmount * sizeof (struct bgStar));
+			for (int i = 0; i < starAmount; i++)
+				resetStar(&stars[i], widthScale, heightScale);
+
 			UnloadRenderTexture(camTexture);
 			camTexture = LoadRenderTexture(curWidth, curHeight/2);
 		}
@@ -162,9 +160,13 @@ int main(void)
 		{
 			ClearBackground(BLACK);
 			BeginMode2D(camera);
+
+			const static float starSize = 2.0f;
 			for(int i = 0; i < starAmount; i++) {
 				DrawCircleV(stars[i].coords, starSize, WHITE);
 			}
+
+			const static float ballRadius = 30.0f;
 			DrawCircleV(mainBall.coords, ballRadius, mainBall.color);
 			for(int i = 0; i < tempBallAmount; i++) {
 				DrawCircleV(tempBalls[i].coords, 
@@ -194,5 +196,6 @@ int main(void)
 		}
 	}
 	CloseWindow();
+	free(stars);
 	return 0;
 }
