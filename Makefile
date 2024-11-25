@@ -2,7 +2,7 @@ LDFLAGS = '-Wl,-rpath,$$ORIGIN' -L./ -I./ -lraylib -lGL -lm -lpthread -ldl -lrt 
 CFLAGS =
 CXXFLAGS = 
 
-all: star-balls stars2d stars-cpp oldZunLogo raindrops
+all: star-balls stars2d stars-cpp oldZunLogo raindrops friend
 star-balls:
 	$(CXX) -o star-balls star-balls.cpp $(LDFLAGS) $(CFLAGS) $(CXXFLAGS)
 stars2d:
@@ -13,3 +13,5 @@ oldZunLogo:
 	$(CC) -o oldZunLogo oldZunLogo.c $(LDFLAGS) $(CFLAGS)
 raindrops:
 	$(CC) -o raindrops raindrops.c $(LDFLAGS) $(CFLAGS)
+friend:
+	$(CC) -o friend friend.c $(LDFLAGS) $(CFLAGS)
