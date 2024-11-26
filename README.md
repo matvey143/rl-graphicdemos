@@ -6,7 +6,7 @@ Collection of small graphical programs I made using raylib.
 3. star-balls.cpp - 3d remake of stars. Now huge stars fly straight into camera, woah.
 4. oldZunLogo.c - My attempt at recreating ZUN intro used in older Touhou games.
 5. raindrops.c - rain drops on puddle. Nothing special, really.
-6. friend.c - not really graphic demo, but a tiny transparant (I hope it really is) desktop friend. Very early WIP. Might not work on Wayland.
+6. friend.c - not really graphic demo, but a tiny transparent (I hope it really is) desktop friend. Very early WIP. Might not work on Wayland. Will be moved to a separate repo soon.
 # Building from source code
 I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
 ## Linux

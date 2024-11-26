@@ -13,5 +13,6 @@ oldZunLogo:
 	$(CC) -o oldZunLogo oldZunLogo.c $(LDFLAGS) $(CFLAGS)
 raindrops:
 	$(CC) -o raindrops raindrops.c $(LDFLAGS) $(CFLAGS)
+# Will be moved to a separate repo. With different build procedures for X11 and Wayland.
 friend:
 	$(CC) -o friend friend.c $(LDFLAGS) $(CFLAGS)
