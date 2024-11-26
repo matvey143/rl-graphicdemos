@@ -3,6 +3,24 @@
 
 // TESTING DO NOT USE.
 // Might not work on tiling WM without support of transperency
+
+float minFloat(float a, float b)
+{
+	if (a > b) return a;
+	else return b;
+}
+
+void moveFriend(Vector2 *friend)
+{
+	float width = GetMouseX() - friend->x;
+	float height = GetMouseY() - friend->y;
+	float angle = tan(width/height);
+
+	const static float speed = 5.0f;
+	friend->x = cos(angle) * speed;
+	friend->y = sin(angle) * speed;
+}
+
 int main(void)
 {
 	SetConfigFlags(FLAG_WINDOW_MOUSE_PASSTHROUGH | 
@@ -17,11 +35,11 @@ int main(void)
 	while (!WindowShouldClose())
 	{
 		if (IsKeyDown(KEY_C) & IsKeyDown(KEY_RIGHT_CONTROL) |
-				IsKeyDown(KEY_C) & IsKeyDown(KEY_LEFT_CONTROL)){
+				IsKeyDown(KEY_C) & IsKeyDown(KEY_LEFT_CONTROL)) {
 			CloseWindow();
 			return 0;
 		}
-		// TODO: Add here logic to move friend according to cursor XY.
+		moveFriend(&FriendXY);
 		BeginDrawing();
 		{
 			ClearBackground(BLANK);
