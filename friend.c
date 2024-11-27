@@ -7,14 +7,10 @@
 
 int main(void)
 {
-	SetConfigFlags(FLAG_WINDOW_MOUSE_PASSTHROUGH | 
-			// I struggle to get it working on XFCE
-			FLAG_WINDOW_TRANSPARENT |
-			FLAG_WINDOW_UNDECORATED |
-			FLAG_WINDOW_TOPMOST |
-			FLAG_WINDOW_UNFOCUSED);
-	InitWindow(GetScreenWidth(), GetScreenHeight(), "Friend");
-	SetWindowPosition(0, 0);
+	SetConfigFlags( FLAG_WINDOW_MOUSE_PASSTHROUGH |
+			// ^ This seems to break GetMousePosition()
+			FLAG_WINDOW_TRANSPARENT);
+	InitWindow(640, 480, "Friend");
 	Vector2 friendXY = {400.0f, 400.0f};
 	while (!WindowShouldClose()) {
 		if (IsKeyDown(KEY_C) & IsKeyDown(KEY_RIGHT_CONTROL) |
