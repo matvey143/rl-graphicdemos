@@ -2,7 +2,7 @@
 #include "raylib.h"
 
 // TESTING DO NOT USE.
-// Might not work on tiling WM without support of transperency
+// Might not work on tiling WM without support of transparency
 
 float minFloat(float a, float b)
 {
@@ -10,15 +10,15 @@ float minFloat(float a, float b)
 	else return b;
 }
 
-void moveFriend(Vector2 *friend)
+void moveFriend(Vector2 *friend, Vector2 mouse)
 {
-	float width = GetMouseX() - friend->x;
-	float height = GetMouseY() - friend->y;
-	float angle = tan(width/height);
+	float width = mouse.x;
+	float height = mouse.y;
+	float angle = atan(height/width);
 
-	const static float speed = 5.0f;
-	friend->x = cos(angle) * speed;
-	friend->y = sin(angle) * speed;
+	const static float speed = 1.0f;
+	friend->x += cos(angle) * speed;
+	friend->y += sin(angle) * speed;
 }
 
 int main(void)
@@ -32,14 +32,13 @@ int main(void)
 	InitWindow(GetScreenWidth(), GetScreenHeight(), "Friend");
 	SetWindowPosition(0, 0);
 	Vector2 FriendXY = {400.0f, 400.0f};
-	while (!WindowShouldClose())
-	{
+	while (!WindowShouldClose()) {
 		if (IsKeyDown(KEY_C) & IsKeyDown(KEY_RIGHT_CONTROL) |
 				IsKeyDown(KEY_C) & IsKeyDown(KEY_LEFT_CONTROL)) {
 			CloseWindow();
 			return 0;
 		}
-		moveFriend(&FriendXY);
+		moveFriend(&FriendXY, GetMousePosition());
 		BeginDrawing();
 		{
 			ClearBackground(BLANK);
