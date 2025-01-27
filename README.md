@@ -7,6 +7,7 @@ Collection of small graphical programs I made using raylib.
 4. oldZunLogo.c - My attempt at recreating ZUN intro used in older Touhou games.
 5. raindrops.c - rain drops on puddle. Nothing special, really.
 6. friend.c - not really graphic demo, but a tiny transparent (I hope it really is) desktop friend. Very early WIP. Might not work on Wayland. Will be moved to a separate repo soon.
+7. current-time.c - is supposed to replicate old digital clocks.
 # Building from source code
 I, unfortunately only know how to use GNU Make on basic level out of all build tools. If you don't want to deal with that, your best option would probably be downloading latest release from GitHub.
 ## Linux
