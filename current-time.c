@@ -11,6 +11,14 @@ int drawSeparator(int offset, int ledWidth, int screenheight)
 
 int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth)
 {
+	/*  000                                 *
+	 * 3   5                                *
+	 * 3   5                                *
+	 *  111                                 *
+	 * 4   6                                *
+	 * 4   6                                *
+	 *  222                                 * 
+	 *  This is the order of LEDs in array. */
 	// Top horizontal
 	DrawRectangle(ledWidth * 2 + offset, ledWidth, hLedLength, ledWidth, GRAY);
 	// Middle horizontal
@@ -43,6 +51,8 @@ int main(void)
 		int hLedLength = (screenwidth - ledWidth * 23) / 6;
 		int vLedLength = (screenheight - ledWidth * 5) / 2;
 
+		struct tm curTime = localtime(time(NULL));
+		
 		BeginDrawing();
 		{
 			ClearBackground(BLACK);
