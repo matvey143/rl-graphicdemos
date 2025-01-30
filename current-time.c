@@ -39,7 +39,8 @@ int main(void)
 		BeginDrawing();
 		{
 			ClearBackground(BLACK);
-			drawDigit(0, hLedLength, vLedLength, ledWidth);
+			int offset = drawDigit(0, hLedLength, vLedLength, ledWidth);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth);
 			// TODO: Here should be "non-lit" clock digits.
 		}
 		EndDrawing();
