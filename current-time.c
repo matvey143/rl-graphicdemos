@@ -13,7 +13,8 @@ int drawSeparator(int offset, int ledWidth, int screenheight)
 
 int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth, int digit)
 {
-	Color ledColors[] = {GRAY, GRAY, GRAY, GRAY, GRAY, GRAY, GRAY};
+	Color ledColors[] = {DARKGRAY, DARKGRAY, DARKGRAY, DARKGRAY, DARKGRAY,
+		DARKGRAY, DARKGRAY};
 	/*  000                                 *
 	 * 3   5                                *
 	 * 3   5                                *
