@@ -3,13 +3,15 @@
 
 int drawSeparator(int offset, int ledWidth, int screenheight)
 {
-	DrawRectangle(offset + ledWidth, screenheight / 4, ledWidth, ledWidth, GREEN);
-	DrawRectangle(offset + ledWidth, screenheight / 4 + screenheight / 2, ledWidth, ledWidth, GREEN);
+	DrawRectangle(offset + ledWidth, screenheight / 4,
+			ledWidth, ledWidth, GREEN);
+	DrawRectangle(offset + ledWidth, screenheight / 4 + screenheight / 2,
+			ledWidth, ledWidth, GREEN);
 	offset += 2 * ledWidth;
 	return offset;
 }
 
-int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth)
+int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth, int digit)
 {
 	Color ledColors[] = {GRAY, GRAY, GRAY, GRAY, GRAY, GRAY, GRAY};
 	/*  000                                 *
@@ -20,6 +22,57 @@ int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth)
 	 * 4   6                                *
 	 *  222                                 * 
 	 *  This is the order of LEDs in array. */
+	switch (digit) {
+	case 0:
+		ledColors[0] = GREEN, ledColors[2] = GREEN,
+			ledColors[3] = GREEN, ledColors[4] = GREEN, 
+			ledColors[5] = GREEN, ledColors[6] = GREEN;
+		break;
+	}
+	case 1:
+		ledColors[5] = GREEN, ledColors[6] = GREEN;
+		break;
+	}
+	case 2:
+		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
+			ledColors[4] = GREEN, ledColors[5] = GREEN;
+		break;
+	}
+	case 3:
+		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
+			ledColors[5] = GREEN, ledColors[6] = GREEN;
+		break;
+	}
+	case 4:
+		ledColors[3] = GREEN, ledColors[5] = GREEN, ledColors[6] = GREEN,
+			ledColors[1] = GREEN;
+		break;
+	}
+	case 5:
+		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
+			ledColors[3] = GREEN, ledColors[6] = GREEN;
+		break;
+	}
+	case 6:
+		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
+			ledColors[3] = GREEN, ledColors[6] = GREEN,
+			ledColors[4] = GREEN;
+		break;
+	}
+	case 7:
+		ledColors[0] = GREEN;
+		break;
+	}
+	case 8:
+		ledColors[0] = GREEN;
+		break;
+	}
+	case 9:
+		ledColors[0] = GREEN;
+		break;
+	default:
+		break;
+	}
 	// Top horizontal
 	DrawRectangle(ledWidth * 2 + offset, ledWidth,
 			hLedLength, ledWidth, ledColors[0]);
@@ -66,16 +119,16 @@ int main(void)
 		{
 			ClearBackground(BLACK);
 			// Hours.
-			int offset = drawDigit(0, hLedLength, vLedLength, ledWidth);
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth);
+			int offset = drawDigit(0, hLedLength, vLedLength, ledWidth, 8);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
 			offset = drawSeparator(offset, ledWidth, screenheight);
 			// Minutes.
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth);
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
 			offset = drawSeparator(offset, ledWidth, screenheight);
 			// Seconds.
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth);
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
 		}
 		EndDrawing();
 	}
