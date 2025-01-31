@@ -98,13 +98,13 @@ int main(void)
 {
 	// I intend to make digits size change depending on window size.
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(640, 360, u8"Clock.");
+	InitWindow(640, 180, u8"Clock.");
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
 		// Might not be perfect.
 		int screenwidth = GetScreenWidth();
 		int screenheight = GetScreenHeight();
-		int ledWidth = screenwidth / (23 * 5);
+		int ledWidth = screenwidth / (23 * 2);
 		int hLedLength = (screenwidth - ledWidth * 23) / 6;
 		int vLedLength = (screenheight - ledWidth * 5) / 2;
 
