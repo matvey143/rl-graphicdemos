@@ -11,6 +11,7 @@ int drawSeparator(int offset, int ledWidth, int screenheight)
 
 int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth)
 {
+	Color ledColors[] = {GRAY, GRAY, GRAY, GRAY, GRAY, GRAY, GRAY};
 	/*  000                                 *
 	 * 3   5                                *
 	 * 3   5                                *
@@ -20,19 +21,26 @@ int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth)
 	 *  222                                 * 
 	 *  This is the order of LEDs in array. */
 	// Top horizontal
-	DrawRectangle(ledWidth * 2 + offset, ledWidth, hLedLength, ledWidth, GRAY);
+	DrawRectangle(ledWidth * 2 + offset, ledWidth,
+			hLedLength, ledWidth, ledColors[0]);
 	// Middle horizontal
-	DrawRectangle(ledWidth * 2 + offset, ledWidth * 2 + vLedLength, hLedLength, ledWidth, GRAY);
+	DrawRectangle(ledWidth * 2 + offset, ledWidth * 2 + vLedLength,
+			hLedLength, ledWidth, ledColors[1]);
 	// Bottom horizontal
-	DrawRectangle(ledWidth * 2 + offset, ledWidth * 3 + vLedLength * 2, hLedLength, ledWidth, GRAY);
+	DrawRectangle(ledWidth * 2 + offset, ledWidth * 3 + vLedLength * 2,
+			hLedLength, ledWidth, ledColors[2]);
 	// Topleft vertical
-	DrawRectangle(ledWidth + offset, ledWidth * 2, ledWidth, vLedLength, GRAY);
+	DrawRectangle(ledWidth + offset, ledWidth * 2, 
+			ledWidth, vLedLength, ledColors[3]);
 	// Bottomleft vertical
-	DrawRectangle(ledWidth + offset, ledWidth * 3 + vLedLength, ledWidth, vLedLength, GRAY);
+	DrawRectangle(ledWidth + offset, ledWidth * 3 + vLedLength,
+			ledWidth, vLedLength, ledColors[4]);
 	// Topright vertical
-	DrawRectangle(ledWidth * 2 + offset + hLedLength, ledWidth * 2, ledWidth, vLedLength, GRAY);
+	DrawRectangle(ledWidth * 2 + offset + hLedLength, ledWidth * 2,
+			ledWidth, vLedLength, ledColors[5]);
 	// Bottomright vertical
-	DrawRectangle(ledWidth * 2 + offset + hLedLength, ledWidth * 3 + vLedLength, ledWidth, vLedLength, GRAY);
+	DrawRectangle(ledWidth * 2 + offset + hLedLength, ledWidth * 3 + vLedLength,
+			ledWidth, vLedLength, ledColors[6]);
 	offset += 3 * ledWidth + hLedLength;
 	return offset;
 }
@@ -51,7 +59,8 @@ int main(void)
 		int hLedLength = (screenwidth - ledWidth * 23) / 6;
 		int vLedLength = (screenheight - ledWidth * 5) / 2;
 
-		struct tm curTime = localtime(time(NULL));
+		time_t curtime = time(NULL);
+		struct tm tmtime = localtime(&curtime);
 		
 		BeginDrawing();
 		{
