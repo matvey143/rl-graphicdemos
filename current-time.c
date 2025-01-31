@@ -115,16 +115,22 @@ int main(void)
 		{
 			ClearBackground(BLACK);
 			// Hours.
-			int offset = drawDigit(0, hLedLength, vLedLength, ledWidth, 8);
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
+			int offset = drawDigit(0, hLedLength, vLedLength, ledWidth,
+					tmtime->tm_hour / 10);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth,
+					tmtime->tm_hour % 10);
 			offset = drawSeparator(offset, ledWidth, screenheight);
 			// Minutes.
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 
+					tmtime->tm_min / 10);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 
+					tmtime->tm_min % 10);
 			offset = drawSeparator(offset, ledWidth, screenheight);
 			// Seconds.
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
-			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 8);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth,
+					tmtime->tm_sec / 10);
+			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth,
+					tmtime->tm_sec % 10);
 		}
 		EndDrawing();
 	}
