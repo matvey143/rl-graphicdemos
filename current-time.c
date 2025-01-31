@@ -60,15 +60,20 @@ int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth, int digi
 		break;
 	}
 	case 7:
-		ledColors[0] = GREEN;
+		ledColors[5] = GREEN, ledColors[6] = GREEN,
+			ledColors[0] = GREEN;
 		break;
 	}
 	case 8:
-		ledColors[0] = GREEN;
+		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
+			ledColors[3] = GREEN, ledColors[6] = GREEN,
+			ledColors[4] = GREEN, ledColors[5] = GREEN;
 		break;
 	}
 	case 9:
-		ledColors[0] = GREEN;
+		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
+			ledColors[3] = GREEN, ledColors[6] = GREEN,
+			ledColors[5] = GREEN;
 		break;
 	default:
 		break;
