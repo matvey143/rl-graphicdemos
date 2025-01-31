@@ -60,7 +60,7 @@ int main(void)
 		int vLedLength = (screenheight - ledWidth * 5) / 2;
 
 		time_t curtime = time(NULL);
-		struct tm tmtime = localtime(&curtime);
+		struct tm *tmtime = localtime(&curtime);
 		
 		BeginDrawing();
 		{
