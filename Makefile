@@ -2,7 +2,7 @@ LDFLAGS = '-Wl,-rpath,$$ORIGIN' -L./ -I./ -lraylib -lGL -lm -lpthread -ldl -lrt 
 CFLAGS =
 CXXFLAGS = 
 
-all: star-balls stars2d stars-cpp oldZunLogo raindrops current-time friend
+all: star-balls stars2d stars-cpp oldZunLogo raindrops current-time
 star-balls:
 	$(CXX) -o star-balls star-balls.cpp $(LDFLAGS) $(CFLAGS) $(CXXFLAGS)
 stars2d:
@@ -15,6 +15,3 @@ raindrops:
 	$(CC) -o raindrops raindrops.c $(LDFLAGS) $(CFLAGS)
 current-time:
 	$(CC) -o current-time current-time.c $(LDFLAGS) $(CFLAGS)
-# Will be moved to a separate repo. With different build procedures for X11 and Wayland.
-friend:
-	$(CC) -o friend friend.c $(LDFLAGS) $(CFLAGS)
