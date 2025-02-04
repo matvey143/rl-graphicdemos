@@ -1,17 +1,22 @@
 #include "raylib.h"
 #include <time.h>
 
-int drawSeparator(int offset, int ledWidth, int screenheight)
+int drawSeparator(int offset, int ledWidth, int screenheight, Color color)
 {
 	DrawRectangle(offset + ledWidth, screenheight / 4,
-			ledWidth, ledWidth, GREEN);
+			ledWidth, ledWidth, color);
 	DrawRectangle(offset + ledWidth, screenheight / 4 + screenheight / 2,
-			ledWidth, ledWidth, GREEN);
+			ledWidth, ledWidth, color);
 	offset += 2 * ledWidth;
 	return offset;
 }
 
-int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth, int digit)
+int drawDigit(int offset,
+		int hLedLength,
+		int vLedLength,
+		int ledWidth,
+		int digit,
+		Color color)
 {
 	Color ledColors[] = {DARKGRAY, DARKGRAY, DARKGRAY, DARKGRAY, DARKGRAY,
 		DARKGRAY, DARKGRAY};
@@ -25,47 +30,47 @@ int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth, int digi
 	 *  This is the order of LEDs in array. */
 	switch (digit) {
 	case 0:
-		ledColors[0] = GREEN, ledColors[2] = GREEN,
-			ledColors[3] = GREEN, ledColors[4] = GREEN, 
-			ledColors[5] = GREEN, ledColors[6] = GREEN;
+		ledColors[0] = color, ledColors[2] = color,
+			ledColors[3] = color, ledColors[4] = color, 
+			ledColors[5] = color, ledColors[6] = color;
 		break;
 	case 1:
-		ledColors[5] = GREEN, ledColors[6] = GREEN;
+		ledColors[5] = color, ledColors[6] = color;
 		break;
 	case 2:
-		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
-			ledColors[4] = GREEN, ledColors[5] = GREEN;
+		ledColors[0] = color, ledColors[1] = color, ledColors[2] = color,
+			ledColors[4] = color, ledColors[5] = color;
 		break;
 	case 3:
-		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
-			ledColors[5] = GREEN, ledColors[6] = GREEN;
+		ledColors[0] = color, ledColors[1] = color, ledColors[2] = color,
+			ledColors[5] = color, ledColors[6] = color;
 		break;
 	case 4:
-		ledColors[3] = GREEN, ledColors[5] = GREEN, ledColors[6] = GREEN,
-			ledColors[1] = GREEN;
+		ledColors[3] = color, ledColors[5] = color, ledColors[6] = color,
+			ledColors[1] = color;
 		break;
 	case 5:
-		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
-			ledColors[3] = GREEN, ledColors[6] = GREEN;
+		ledColors[0] = color, ledColors[1] = color, ledColors[2] = color,
+			ledColors[3] = color, ledColors[6] = color;
 		break;
 	case 6:
-		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
-			ledColors[3] = GREEN, ledColors[6] = GREEN,
-			ledColors[4] = GREEN;
+		ledColors[0] = color, ledColors[1] = color, ledColors[2] = color,
+			ledColors[3] = color, ledColors[6] = color,
+			ledColors[4] = color;
 		break;
 	case 7:
-		ledColors[5] = GREEN, ledColors[6] = GREEN,
-			ledColors[0] = GREEN;
+		ledColors[5] = color, ledColors[6] = color,
+			ledColors[0] = color;
 		break;
 	case 8:
-		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
-			ledColors[3] = GREEN, ledColors[6] = GREEN,
-			ledColors[4] = GREEN, ledColors[5] = GREEN;
+		ledColors[0] = color, ledColors[1] = color, ledColors[2] = color,
+			ledColors[3] = color, ledColors[6] = color,
+			ledColors[4] = color, ledColors[5] = color;
 		break;
 	case 9:
-		ledColors[0] = GREEN, ledColors[1] = GREEN, ledColors[2] = GREEN,
-			ledColors[3] = GREEN, ledColors[6] = GREEN,
-			ledColors[5] = GREEN;
+		ledColors[0] = color, ledColors[1] = color, ledColors[2] = color,
+			ledColors[3] = color, ledColors[6] = color,
+			ledColors[5] = color;
 		break;
 	default:
 		break;
@@ -97,9 +102,13 @@ int drawDigit(int offset, int hLedLength, int vLedLength, int ledWidth, int digi
 
 int main(void)
 {
-	// I intend to make digits size change depending on window size.
+	// TODO: make it so pressing space would change color of LED.
+	Color ledOptions[] = {GREEN, BLUE, RED, ORANGE, PURPLE, WHITE};
+	int optionSize = sizeof ledOptions / sizeof ledOptions[0];
+	int selectedColor = 0;
+
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
-	InitWindow(640, 180, u8"Clock.");
+	InitWindow(640, 180, u8"Clock. Press space to change color.");
 	SetTargetFPS(60);
 	while (!WindowShouldClose()) {
 		// Might not be perfect.
@@ -114,24 +123,30 @@ int main(void)
 		
 		BeginDrawing();
 		{
+			if (IsKeyPressed(KEY_SPACE)) {
+				if (selectedColor >= optionSize)
+					selectedColor = 0;
+				else
+					selectedColor++;
+			}
 			ClearBackground(BLACK);
 			// Hours.
 			int offset = drawDigit(0, hLedLength, vLedLength, ledWidth,
-					tmtime->tm_hour / 10);
+					tmtime->tm_hour / 10, ledOptions[selectedColor]);
 			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth,
-					tmtime->tm_hour % 10);
-			offset = drawSeparator(offset, ledWidth, screenheight);
+					tmtime->tm_hour % 10, ledOptions[selectedColor]);
+			offset = drawSeparator(offset, ledWidth, screenheight, ledOptions[selectedColor]);
 			// Minutes.
 			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 
-					tmtime->tm_min / 10);
+					tmtime->tm_min / 10, ledOptions[selectedColor]);
 			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth, 
-					tmtime->tm_min % 10);
-			offset = drawSeparator(offset, ledWidth, screenheight);
+					tmtime->tm_min % 10, ledOptions[selectedColor]);
+			offset = drawSeparator(offset, ledWidth, screenheight, ledOptions[selectedColor]);
 			// Seconds.
 			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth,
-					tmtime->tm_sec / 10);
+					tmtime->tm_sec / 10, ledOptions[selectedColor]);
 			offset = drawDigit(offset, hLedLength, vLedLength, ledWidth,
-					tmtime->tm_sec % 10);
+					tmtime->tm_sec % 10, ledOptions[selectedColor]);
 		}
 		EndDrawing();
 	}
