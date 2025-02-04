@@ -124,7 +124,7 @@ int main(void)
 		BeginDrawing();
 		{
 			if (IsKeyPressed(KEY_SPACE)) {
-				if (selectedColor >= optionSize)
+				if (selectedColor == optionSize - 1)
 					selectedColor = 0;
 				else
 					selectedColor++;
