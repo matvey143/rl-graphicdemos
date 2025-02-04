@@ -1,12 +1,11 @@
 #include "raylib.h"
 #include <time.h>
 
-// Separators are not properly symmetrical. TODO: Fix.
 int drawSeparator(int offset, int ledWidth, int screenheight, Color color)
 {
-	DrawRectangle(offset + ledWidth, screenheight / 4,
-			ledWidth, ledWidth, color);
-	DrawRectangle(offset + ledWidth, screenheight / 4 + screenheight / 2,
+	int pad = (screenheight - 2 * ledWidth) / 3;
+	DrawRectangle(offset + ledWidth, pad, ledWidth, ledWidth, color);
+	DrawRectangle(offset + ledWidth, pad + pad + ledWidth,
 			ledWidth, ledWidth, color);
 	offset += 2 * ledWidth;
 	return offset;
