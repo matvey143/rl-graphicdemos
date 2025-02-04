@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include <time.h>
 
+// Separators are not properly symmetrical. TODO: Fix.
 int drawSeparator(int offset, int ledWidth, int screenheight, Color color)
 {
 	DrawRectangle(offset + ledWidth, screenheight / 4,
@@ -102,8 +103,9 @@ int drawDigit(int offset,
 
 int main(void)
 {
-	// TODO: make it so pressing space would change color of LED.
-	Color ledOptions[] = {GREEN, BLUE, RED, ORANGE, PURPLE, WHITE};
+	// TODO: add more colors maybe?
+	Color ledOptions[] = {GREEN, BLUE, RED, ORANGE, PURPLE, YELLOW, WHITE,
+		MAGENTA};
 	int optionSize = sizeof ledOptions / sizeof ledOptions[0];
 	int selectedColor = 0;
 
